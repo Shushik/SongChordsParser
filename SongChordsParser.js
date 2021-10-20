@@ -3,7 +3,7 @@
  */
 
 /**
- * @const {string} DEFAULT_TITLE
+ * @const {string} TITLE_DEFAULT
  */
 const TITLE_DEFAULT = '* * *';
 
