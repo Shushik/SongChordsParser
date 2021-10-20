@@ -155,7 +155,7 @@ export default class Self {
      * @constructor
      * @param {string} raw
      */
-    constructor(raw) {
+    constructor(raw = '') {
         this.parse(raw);
     }
 
@@ -180,7 +180,7 @@ export default class Self {
      * @param {string} raw
      * @returns {object}
      */
-    parse(raw) {
+    parse(raw = '') {
         /**
          * @member {string} title
          */
