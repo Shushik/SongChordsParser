@@ -1,5 +1,9 @@
 /**
  * Song text parser
+ *
+ * @author Shushik <silkleopard@yandex.ru>
+ * @version 1.0
+ * @license MIT
  */
 
 /**
