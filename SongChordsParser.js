@@ -369,8 +369,10 @@ export default class Self {
      * @returns {Array}
      */
     _parseLine(raw) {
+        let alone = false;
         let it0 = 0;
         let ln0 = 0;
+        let next = '';
         let types = LINE_TAGS.join('|');
         let rexp = new RegExp(`^(${types})(="([^"]*)")?$`);
         let line = [];
@@ -389,9 +391,19 @@ export default class Self {
                     // Insert chord object
                     case CHORD_ALIAS:
                     case CHORD_SHORTCUT:
+                        next = splited[it0 + 1];
+                        alone = false;
+
+                        // Sometimes chord isn't surrounded by text
+                        // and needs to be rendered other way
+                        if (!next || next == ' ' || next.match(rexp)) {
+                            alone = true;
+                        }
+
                         line.push({
                             type: CHORD_ALIAS,
-                            value: found[3]
+                            value: found[3],
+                            alone
                         });
 
                         this._parseChord(found[3]);
