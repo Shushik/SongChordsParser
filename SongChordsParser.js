@@ -9,12 +9,12 @@
 /**
  * @const {string} TITLE_DEFAULT
  */
-const TITLE_DEFAULT = '* * *';
+const TITLE_DEFAULT = '* * *';
 
 /**
- * @const {string} AUTHOR_TYPE_DEFAULT
+ * @const {string} ASTERISM_DEFAULT
  */
-const AUTHOR_TYPE_DEFAULT = 'author';
+const ASTERISM_DEFAULT = TITLE_DEFAULT;
 
 /**
  * @const {string} AUTHOR_TYPE_MUSIC
@@ -27,6 +27,16 @@ const AUTHOR_TYPE_MUSIC = 'composed';
 const AUTHOR_TYPE_LYRICS = 'written';
 
 /**
+ * @const {string} AUTHOR_TYPE_ARTIST
+ */
+const AUTHOR_TYPE_ARTIST = 'performed';
+
+/**
+ * @const {string} AUTHOR_TYPE_DEFAULT
+ */
+const AUTHOR_TYPE_DEFAULT = 'author';
+
+/**
  * @const {string} AUTHOR_TYPE_TRANSLATION
  */
 const AUTHOR_TYPE_TRANSLATION = 'translated';
@@ -36,6 +46,7 @@ const AUTHOR_TYPE_TRANSLATION = 'translated';
  */
 const AUTHOR_TYPES = [
     AUTHOR_TYPE_MUSIC,
+    AUTHOR_TYPE_ARTIST,
     AUTHOR_TYPE_LYRICS,
     AUTHOR_TYPE_DEFAULT,
     AUTHOR_TYPE_TRANSLATION
@@ -45,10 +56,11 @@ const AUTHOR_TYPES = [
  * @const {object} AUTHOR_ORDER
  */
 const AUTHOR_ORDER = {
-    [AUTHOR_TYPE_MUSIC]: 2,
-    [AUTHOR_TYPE_LYRICS]: 3,
-    [AUTHOR_TYPE_DEFAULT]: 1,
-    [AUTHOR_TYPE_TRANSLATION]: 4
+    [AUTHOR_TYPE_MUSIC]: 1,
+    [AUTHOR_TYPE_ARTIST]: 4,
+    [AUTHOR_TYPE_LYRICS]: 2,
+    [AUTHOR_TYPE_DEFAULT]: 0,
+    [AUTHOR_TYPE_TRANSLATION]: 3
 };
 
 /**
@@ -179,6 +191,36 @@ export default class Self {
         return {title, chords, verses, authors};
     }
 
+    get authorsGroupedByType() {
+        let it0 = 0;
+        let ln0 = this.authors.length;
+        let al0 = '';
+        let author = null;
+        let grouped = [];
+
+        // No need to go further
+        if (!ln0) {
+            return grouped;
+        }
+
+        // Fill groups array
+        for (al0 in AUTHOR_ORDER) {
+            grouped[AUTHOR_ORDER[al0]] = {
+                type: al0,
+                list: []
+            };
+        }
+
+        // Fill authors lists
+        for (; it0 < ln0; it0++) {
+            author = this.authors[it0];
+
+            grouped[AUTHOR_ORDER[author.type]].list.push(author.name);
+        }
+
+        return grouped;
+    }
+
     /**
      * @method parse
      * @param {string} raw
@@ -258,7 +300,8 @@ export default class Self {
     _parseTitle(raw) {
         let it0 = 0;
         let ln0 = 0;
-        let seek = /\[title\][^\[]*\[\/title\]\s*/g
+        let title = '';
+        let seek = /\[title\][^\[]*\[\/title\]\s*/g;
         let found = raw.match(seek);
 
         // No need to go further
@@ -269,8 +312,10 @@ export default class Self {
         // There should be only one title
         for (ln0 = found.length; it0 < ln0; it0++) {
             if (it0 === 0) {
-                this.title = `${found[it0]}`.
-                             replace(/\[\/?title\]\s*/g, '');
+                title = `${found[it0]}`.replace(/\[\/?title\]\s*/g, '');
+                title = title || TITLE_DEFAULT;
+
+                this.title = title;
             }
 
             raw = raw.replace(found[it0], '');
@@ -464,6 +509,7 @@ export default class Self {
     _parseVerse(raw) {
         let type = VERSE_TYPE_DEFAULT;
         let types = VERSE_TYPES.join('|');
+        let content = '';
         let brexp = new RegExp(`^\\[(${types})\\]\s*`);
         let erexp = new RegExp(`\s*\\[\\/(${types})\\]$`);
         let found = raw.match(brexp);
@@ -472,7 +518,15 @@ export default class Self {
         if (found) {
             type = found[1];
 
-            raw = raw.replace(found[0], '');
+            switch (type) {
+
+                case VERSE_TYPE_ASTERISM:
+                    content = ASTERISM_DEFAULT;
+                    break;
+
+            }
+
+            raw = raw.replace(found[0], content);
             found = raw.match(erexp);
 
             if (found) {
