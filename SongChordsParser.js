@@ -176,6 +176,28 @@ export default class Self {
     }
 
     /**
+     * Rewrites standart valueOf method
+     *
+     * @method valueOf
+     * @returns {object}
+     */
+    valueOf() {
+        return this.parsed;
+    }
+
+    /**
+     * Rewrites standart toString method
+     *
+     * @method toString
+     * @returns {string}
+     */
+    toString() {
+        return this.json;
+    }
+
+    /**
+     * All main data as JSON string
+     *
      * @member {object} json
      */
     get json() {
@@ -183,6 +205,8 @@ export default class Self {
     }
 
     /**
+     * All main data as object
+     *
      * @member {object} parsed
      */
     get parsed() {
@@ -191,6 +215,11 @@ export default class Self {
         return {title, chords, verses, authors};
     }
 
+    /**
+     * Authors organized by their types
+     *
+     * @member {Array} authorsGroupedByType
+     */
     get authorsGroupedByType() {
         let it0 = 0;
         let ln0 = this.authors.length;
@@ -222,6 +251,8 @@ export default class Self {
     }
 
     /**
+     * Starts parsing
+     *
      * @method parse
      * @param {string} raw
      * @returns {object}
@@ -258,40 +289,8 @@ export default class Self {
     }
 
     /**
-     * @method valueOf
-     * @returns {object}
-     */
-    valueOf() {
-        return this.parsed;
-    }
-
-    /**
-     * @method toString
-     * @returns {string}
-     */
-    toString() {
-        return this.json;
-    }
-
-    /**
-     * @private
-     * @method _parseAuthor
-     * @param {string} found
-     * @param {string} types
-     * @param {string} raw
-     * @returns {string}
-     */
-    _parseAuthor(found, types, raw) {
-        let rexp = new RegExp(`\\[\\/?(${types})\\]\\s*`, 'g');
-        let type = found.match(rexp)[0].replace(/[\[\]]/g, '');
-        let name = found.replace(rexp, '');
-
-        this.authors.push({type, name});
-
-        return raw.replace(found, '');
-    }
-
-    /**
+     * Parses song title from [title] blocks
+     *
      * @private
      * @method _parseTitle
      * @param {string} raw
@@ -566,6 +565,26 @@ export default class Self {
         }
 
         return raw;
+    }
+
+    /**
+     * Parses song author name and author type
+     *
+     * @private
+     * @method _parseAuthor
+     * @param {string} found
+     * @param {string} types
+     * @param {string} raw
+     * @returns {string}
+     */
+    _parseAuthor(found, types, raw) {
+        let rexp = new RegExp(`\\[\\/?(${types})\\]\\s*`, 'g');
+        let type = found.match(rexp)[0].replace(/[\[\]]/g, '');
+        let name = found.replace(rexp, '');
+
+        this.authors.push({type, name});
+
+        return raw.replace(found, '');
     }
 
     /**
