@@ -334,7 +334,7 @@ export default class Self {
      */
     _parseChord(raw) {
         // No need to go further
-        if (this.chords.indexOf(raw) !== -1) {
+        if (!raw || this.chords.indexOf(raw) !== -1) {
             return;
         }
 
