@@ -254,7 +254,6 @@ export default class Self {
      * Clears all previously parsed data
      *
      * @method clear
-     * @returns {object}
      */
     clear() {
         /**
