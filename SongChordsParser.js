@@ -19,27 +19,27 @@ const ASTERISM_DEFAULT = TITLE_DEFAULT;
 /**
  * @const {string} AUTHOR_TYPE_MUSIC
  */
-const AUTHOR_TYPE_MUSIC = 'composed';
+export const AUTHOR_TYPE_MUSIC = 'composed';
 
 /**
  * @const {string} AUTHOR_TYPE_LYRICS
  */
-const AUTHOR_TYPE_LYRICS = 'written';
+export const AUTHOR_TYPE_LYRICS = 'written';
 
 /**
  * @const {string} AUTHOR_TYPE_ARTIST
  */
-const AUTHOR_TYPE_ARTIST = 'performed';
+export const AUTHOR_TYPE_ARTIST = 'performed';
 
 /**
  * @const {string} AUTHOR_TYPE_DEFAULT
  */
-const AUTHOR_TYPE_DEFAULT = 'author';
+export const AUTHOR_TYPE_DEFAULT = 'author';
 
 /**
  * @const {string} AUTHOR_TYPE_TRANSLATION
  */
-const AUTHOR_TYPE_TRANSLATION = 'translated';
+export const AUTHOR_TYPE_TRANSLATION = 'translated';
 
 /**
  * @const {Array} AUTHOR_TYPES
@@ -66,42 +66,42 @@ const AUTHOR_ORDER = {
 /**
  * @const {string} VERSE_TYPE_CODA
  */
-const VERSE_TYPE_CODA = 'coda';
+export const VERSE_TYPE_CODA = 'coda';
 
 /**
  * @const {string} VERSE_TYPE_NOTE
  */
-const VERSE_TYPE_NOTE = 'note';
+export const VERSE_TYPE_NOTE = 'note';
 
 /**
  * @const {string} VERSE_TYPE_CHORUS
  */
-const VERSE_TYPE_CHORUS = 'chorus';
+export const VERSE_TYPE_CHORUS = 'chorus';
 
 /**
  * @const {string} VERSE_TYPE_INTRO
  */
-const VERSE_TYPE_INTRO = 'intro';
+export const VERSE_TYPE_INTRO = 'intro';
 
 /**
  * @const {string} VERSE_TYPE_BRIDGE
  */
-const VERSE_TYPE_BRIDGE = 'bridge';
+export const VERSE_TYPE_BRIDGE = 'bridge';
 
 /**
  * @const {string} VERSE_TYPE_DEFAULT
  */
-const VERSE_TYPE_DEFAULT = 'verse';
+export const VERSE_TYPE_DEFAULT = 'verse';
 
 /**
  * @const {string} VERSE_TYPE_ASTERISM
  */
-const VERSE_TYPE_ASTERISM = 'asterism';
+export const VERSE_TYPE_ASTERISM = 'asterism';
 
 /**
  * @const {string} VERSE_TYPE_EPIGRAPH
  */
-const VERSE_TYPE_EPIGRAPH = 'epigraph';
+export const VERSE_TYPE_EPIGRAPH = 'epigraph';
 
 /**
  * @const {Array} VERSE_TYPES
@@ -125,12 +125,12 @@ const REPEAT_TIMES = 2;
 /**
  * @const {string} REPEAT_ALIAS
  */
-const REPEAT_ALIAS = 'repeat';
+export const REPEAT_ALIAS = 'repeat';
 
 /**
  * @const {string} CHORD_ALIAS
  */
-const CHORD_ALIAS = 'chord';
+export const CHORD_ALIAS = 'chord';
 
 /**
  * @const {string} CHORD_SHORTCUT
@@ -145,7 +145,7 @@ const SPACER_TIMES = 2;
 /**
  * @const {string} SPACER_ALIAS
  */
-const SPACER_ALIAS = 'space';
+export const SPACER_ALIAS = 'space';
 
 /**
  * @const {string} SPACER_SHORTCUT
@@ -251,13 +251,12 @@ export default class Self {
     }
 
     /**
-     * Starts parsing
+     * Clears all previously parsed data
      *
-     * @method parse
-     * @param {string} raw
+     * @method clear
      * @returns {object}
      */
-    parse(raw = '') {
+    clear() {
         /**
          * @member {string} title
          */
@@ -277,6 +276,17 @@ export default class Self {
          * @member {Array} authors
          */
         this.authors = [];
+    }
+
+    /**
+     * Starts parsing
+     *
+     * @method parse
+     * @param {string} raw
+     * @returns {object}
+     */
+    parse(raw = '') {
+        this.clear();
 
         raw = this._parseTitle(raw);
         raw = this._parseAuthors(raw);
