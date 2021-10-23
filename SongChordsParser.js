@@ -375,10 +375,11 @@ export default class Self {
      * @private
      * @method _parseLine
      * @param {string} raw
+     * @param {string} type
      * @param {object} repeat
      * @returns {Array}
      */
-    _parseLine(raw, repeat) {
+    _parseLine(raw, type, repeat) {
         let alone = false;
         let it0 = 0;
         let ln0 = 0;
@@ -410,17 +411,30 @@ export default class Self {
                             alone = true;
                         }
 
+                        // Save chord object into line
                         line.push({
                             type: CHORD_ALIAS,
                             value: found[3],
                             alone
                         });
 
+                        // Repeat section contain chords
                         if (repeat) {
                             repeat.chorded = true;
                         }
 
-                        this._parseChord(found[3]);
+                        // Don't save chords in list for codas, intros
+                        // and bridges
+                        switch (type) {
+
+                            case VERSE_TYPE_NOTE:
+                            case VERSE_TYPE_CHORUS:
+                            case VERSE_TYPE_DEFAULT:
+                            case VERSE_TYPE_EPIGRAPH:
+                                this._parseChord(found[3]);
+                                break;
+
+                        }
                         break;
 
                     // Insert spacer object
@@ -448,9 +462,10 @@ export default class Self {
      * @private
      * @method _parseLines
      * @param {string} raw
+     * @param {string} type
      * @returns {Array}
      */
-    _parseLines(raw) {
+    _parseLines(raw, type) {
         let it0 = 0;
         let ln0 = 0;
         let brexp = /(\[repeat(="(\d+)")?\])\s*/;
@@ -480,10 +495,10 @@ export default class Self {
 
                     if (found) {
                         line = line.replace(found[0], '');
-                        repeat.lines.push(this._parseLine(line, repeat));
+                        repeat.lines.push(this._parseLine(line, type, repeat));
                         repeat = null;
                     } else {
-                        repeat.lines.push(this._parseLine(line, repeat));
+                        repeat.lines.push(this._parseLine(line, type, repeat));
                     }
                 } else {
                     found = line.match(brexp);
@@ -505,7 +520,7 @@ export default class Self {
                             line = line.replace(found[0], '');
                         }
 
-                        repeat.lines.push(this._parseLine(line, repeat));
+                        repeat.lines.push(this._parseLine(line, type, repeat));
 
                         lines.push(repeat);
 
@@ -513,7 +528,7 @@ export default class Self {
                             repeat = null;
                         }
                     } else {
-                        lines.push(this._parseLine(line, repeat));
+                        lines.push(this._parseLine(line, type, repeat));
                     }
                 }
             }
@@ -559,7 +574,7 @@ export default class Self {
             }
         }
 
-        lines = this._parseLines(raw);
+        lines = this._parseLines(raw, type);
 
         return {type, lines};
     }
