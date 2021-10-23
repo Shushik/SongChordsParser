@@ -375,9 +375,10 @@ export default class Self {
      * @private
      * @method _parseLine
      * @param {string} raw
+     * @param {object} repeat
      * @returns {Array}
      */
-    _parseLine(raw) {
+    _parseLine(raw, repeat) {
         let alone = false;
         let it0 = 0;
         let ln0 = 0;
@@ -414,6 +415,10 @@ export default class Self {
                             value: found[3],
                             alone
                         });
+
+                        if (repeat) {
+                            repeat.chorded = true;
+                        }
 
                         this._parseChord(found[3]);
                         break;
@@ -475,10 +480,10 @@ export default class Self {
 
                     if (found) {
                         line = line.replace(found[0], '');
-                        repeat.lines.push(this._parseLine(line));
+                        repeat.lines.push(this._parseLine(line, repeat));
                         repeat = null;
                     } else {
-                        repeat.lines.push(this._parseLine(line));
+                        repeat.lines.push(this._parseLine(line, repeat));
                     }
                 } else {
                     found = line.match(brexp);
@@ -500,7 +505,7 @@ export default class Self {
                             line = line.replace(found[0], '');
                         }
 
-                        repeat.lines.push(this._parseLine(line));
+                        repeat.lines.push(this._parseLine(line, repeat));
 
                         lines.push(repeat);
 
@@ -508,7 +513,7 @@ export default class Self {
                             repeat = null;
                         }
                     } else {
-                        lines.push(this._parseLine(line))
+                        lines.push(this._parseLine(line, repeat));
                     }
                 }
             }
