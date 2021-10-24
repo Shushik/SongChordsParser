@@ -135,7 +135,7 @@ export const CHORD_ALIAS = 'chord';
 /**
  * @const {string} CHORD_SHORTCUT
  */
-const CHORD_SHORTCUT = 'c';
+export const CHORD_SHORTCUT = 'c';
 
 /**
  * @const {number} SPACER_TIMES
@@ -150,7 +150,7 @@ export const SPACER_ALIAS = 'space';
 /**
  * @const {string} SPACER_SHORTCUT
  */
-const SPACER_SHORTCUT = 's';
+export const SPACER_SHORTCUT = 's';
 
 /**
  * @const {Array} LINE_TAGS
