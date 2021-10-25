@@ -723,8 +723,6 @@ export default class Self {
      * @returns {string}
      */
     _parseCommons(raw) {
-        let types = VERSE_TYPES.join('|');
-
         raw = raw.
               replace(/\t/g, ' ').
               replace(/\r/, '').
