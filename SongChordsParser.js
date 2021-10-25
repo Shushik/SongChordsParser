@@ -618,7 +618,8 @@ export default class Self {
         let it0 = 0;
         let ln0 = 0;
         let verse = '';
-        let verses = raw.split(/\n{2,}/);
+        let types = VERSE_TYPES.join('|');
+        let verses = raw.replace(new RegExp(`(\\[\\/(${types})\\])\n(\S)`), '$1\n\n$2').split(/\n{2,}/);
 
         if (!verses.length) {
             return raw;
