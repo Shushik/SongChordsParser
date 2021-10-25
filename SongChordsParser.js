@@ -618,8 +618,7 @@ export default class Self {
         let it0 = 0;
         let ln0 = 0;
         let verse = '';
-        let types = VERSE_TYPES.join('|');
-        let verses = raw.replace(new RegExp(`(\\[\\/(${types})\\])\n(\S)`), '$1\n\n$2').split(/\n{2,}/);
+        let verses = raw.split(/\n{2,}/);
 
         if (!verses.length) {
             return raw;
@@ -724,7 +723,10 @@ export default class Self {
      * @returns {string}
      */
     _parseCommons(raw) {
+        let types = VERSE_TYPES.join('|');
+
         raw = raw.
+              replace(new RegExp(`(\\[\\/(${types})\\])\n{n}`), '$1\n\n').
               replace(/\t/g, ' ').
               replace(/\r/, '').
               replace(/ {3,}/g, '  ').
