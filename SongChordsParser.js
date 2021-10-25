@@ -725,6 +725,7 @@ export default class Self {
     _parseCommons(raw) {
         let types = VERSE_TYPES.join('|');
         raw = raw.
+              replace(new RegExp(`(\n{1}\\[(${types})\\])`), '\n\n$1').
               replace(new RegExp(`(\\[\\/(${types})\\])\n{1}`), '$1\n\n').
               replace(/\t/g, ' ').
               replace(/\r/, '').
