@@ -12,6 +12,11 @@
 export const FLAT_SYMBOL = '♭';
 
 /**
+ * @const {RegExp} FLAT_REXP
+ */
+export const FLAT_REXP = /^([ABCDEFG])b/;
+
+/**
  * @const {string} BEKAR_SYMBOL
  */
 export const BEKAR_SYMBOL = '♮';
@@ -20,6 +25,11 @@ export const BEKAR_SYMBOL = '♮';
  * @const {string} SHARP_SYMBOL
  */
 export const SHARP_SYMBOL = '♯';
+
+/**
+ * @const {RegExp} SHARP_REXP
+ */
+export const SHARP_REXP = /^([ABCDEFG])#/;
 
 /**
  * @const {string} TITLE_DEFAULT
@@ -430,8 +440,8 @@ export default class Self {
                         line.push({
                             type: CHORD_ALIAS,
                             value: found[3].
-                                   replace(/^([ABCDEFG])#/, `$1${SHARP_SYMBOL}`).
-                                   replace(/^([ABCDEFG])b/, `$1${FLAT_SYMBOL}`),
+                                   replace(SHARP_REXP, `$1${SHARP_SYMBOL}`).
+                                   replace(FLAT_REXP, `$1${FLAT_SYMBOL}`),
                             alone
                         });
 
