@@ -439,7 +439,7 @@ export default class Self {
                         // Save chord object into line
                         line.push({
                             type: CHORD_ALIAS,
-                            value: found[3].
+                            value: (found[3] ? found[3] : '').
                                    replace(SHARP_REXP, `$1${SHARP_SYMBOL}`).
                                    replace(FLAT_REXP, `$1${FLAT_SYMBOL}`),
                             alone
