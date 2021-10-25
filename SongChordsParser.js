@@ -7,6 +7,21 @@
  */
 
 /**
+ * @const {string} FLAT_SYMBOL
+ */
+export const FLAT_SYMBOL = '♭';
+
+/**
+ * @const {string} BEKAR_SYMBOL
+ */
+export const BEKAR_SYMBOL = '♮';
+
+/**
+ * @const {string} SHARP_SYMBOL
+ */
+export const SHARP_SYMBOL = '♯';
+
+/**
  * @const {string} TITLE_DEFAULT
  */
 const TITLE_DEFAULT = '* * *';
@@ -414,7 +429,9 @@ export default class Self {
                         // Save chord object into line
                         line.push({
                             type: CHORD_ALIAS,
-                            value: found[3],
+                            value: found[3].
+                                   replace(/^([ABCDEFG])#/, `$1${SHARP_SYMBOL}`).
+                                   replace(/^([ABCDEFG])b/, `$1${FLAT_SYMBOL}`),
                             alone
                         });
 
