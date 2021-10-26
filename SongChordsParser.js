@@ -761,8 +761,14 @@ export default class Self {
      * @returns {string}
      */
     _parseCommons(raw) {
-        let types = VERSE_TYPES.join('|');
+        let types = BLOCKS_LIST.join('|');
+
         raw = raw.
+              replace(/\s{1,}([.,:;!?]|\.\.\.)/g, '$1').
+              replace(/--/g, '—').
+              replace(/(\s{1,})-/g, '$1—').
+              replace(/([.]{3})/g, '…').
+              replace(/(\d+) *- *(\d+)/g, '$1–$2').
               replace(new RegExp(`(\n{1}\\[(${types})\\])`), '\n\n$1').
               replace(new RegExp(`(\\[\\/(${types})\\])\n{1}`), '$1\n\n').
               replace(/\t/g, ' ').
