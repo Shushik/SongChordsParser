@@ -764,6 +764,8 @@ export default class Self {
         let types = BLOCKS_LIST.join('|');
 
         raw = raw.
+              replace(/(\d+)\s*:\s*-1/g, '$1:false').
+              replace(/(\d+)\s*:\s*0/g, '$1:true').
               replace(/\s{1,}([.,:;!?]|\.\.\.)/g, '$1').
               replace(/--/g, '—').
               replace(/(\s{1,})-/g, '$1—').
