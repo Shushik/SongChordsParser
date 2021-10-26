@@ -37,6 +37,11 @@ export const SHARP_REXP = /^([ABCDEFG])#/;
 const TITLE_DEFAULT = '* * *';
 
 /**
+ * @const {string} TITLE_ALIAS
+ */
+export const TITLE_ALIAS = 'title';
+
+/**
  * @const {string} ASTERISM_DEFAULT
  */
 const ASTERISM_DEFAULT = TITLE_DEFAULT;
@@ -99,11 +104,6 @@ export const VERSE_TYPE_CODA = 'coda';
 export const VERSE_TYPE_NOTE = 'note';
 
 /**
- * @const {string} VERSE_TYPE_CHORUS
- */
-export const VERSE_TYPE_CHORUS = 'chorus';
-
-/**
  * @const {string} VERSE_TYPE_INTRO
  */
 export const VERSE_TYPE_INTRO = 'intro';
@@ -112,6 +112,11 @@ export const VERSE_TYPE_INTRO = 'intro';
  * @const {string} VERSE_TYPE_BRIDGE
  */
 export const VERSE_TYPE_BRIDGE = 'bridge';
+
+/**
+ * @const {string} VERSE_TYPE_CHORUS
+ */
+export const VERSE_TYPE_CHORUS = 'chorus';
 
 /**
  * @const {string} VERSE_TYPE_DEFAULT
@@ -185,6 +190,37 @@ const LINE_TAGS = [
     CHORD_ALIAS,
     SPACER_SHORTCUT,
     SPACER_ALIAS
+];
+
+/**
+ * @const {Array} BLOCKS_LIST
+ */
+export const BLOCKS_LIST = [
+    TITLE_ALIAS,
+    VERSE_TYPE_CODA,
+    VERSE_TYPE_NOTE,
+    VERSE_TYPE_CHORUS,
+    VERSE_TYPE_INTRO,
+    VERSE_TYPE_BRIDGE,
+    VERSE_TYPE_DEFAULT,
+    VERSE_TYPE_ASTERISM,
+    VERSE_TYPE_EPIGRAPH,
+    AUTHOR_TYPE_MUSIC,
+    AUTHOR_TYPE_LYRICS,
+    AUTHOR_TYPE_ARTIST,
+    AUTHOR_TYPE_DEFAULT,
+    AUTHOR_TYPE_TRANSLATION
+];
+
+/**
+ * @const {Array} INLINES_LIST
+ */
+export const INLINES_LIST = [
+    CHORD_ALIAS,
+    CHORD_SHORTCUT,
+    REPEAT_ALIAS,
+    SPACER_ALIAS,
+    SPACER_SHORTCUT
 ];
 
 /**
