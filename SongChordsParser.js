@@ -14,7 +14,7 @@ export const FLAT_SYMBOL = '♭';
 /**
  * @const {RegExp} FLAT_REXP
  */
-export const FLAT_REXP = /^([ABCDEFG])b/;
+export const FLAT_REXP = /^([ABCDEFG])b/g;
 
 /**
  * @const {string} BEKAR_SYMBOL
@@ -29,7 +29,7 @@ export const SHARP_SYMBOL = '♯';
 /**
  * @const {RegExp} SHARP_REXP
  */
-export const SHARP_REXP = /^([ABCDEFG])#/;
+export const SHARP_REXP = /^([ABCDEFG])#/g;
 
 /**
  * @const {string} TITLE_DEFAULT
