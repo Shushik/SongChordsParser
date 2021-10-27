@@ -527,8 +527,6 @@ export default class Self {
                                     break;
 
                             }
-
-                            value = `{"title":"${this._chordId}","chord":${value}}`;
                         } else {
                             value = value.
                                     replace(SHARP_REXP, `$1${SHARP_SYMBOL}`).
