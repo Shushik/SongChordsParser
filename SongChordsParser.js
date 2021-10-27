@@ -497,7 +497,8 @@ export default class Self {
                     case CHORD_SHORTCUT:
                         next = splited[it0 + 1];
                         alone = false;
-                        value = found[3].replace(/\s/g, '');
+                        value = found[3] ? found[3] : '';
+                        value = value.replace(/\s/g, '');
 
                         // Sometimes chord isn't surrounded by text
                         // and needs to be rendered other way
