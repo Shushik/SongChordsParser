@@ -275,6 +275,8 @@ export default class Self {
      * @param {string} raw
      */
     constructor(raw = '') {
+        this._chordId = 0;
+
         this.parse(raw);
     }
 
@@ -359,6 +361,12 @@ export default class Self {
      * @method clear
      */
     clear() {
+        /**
+         * @private
+         * @member {number} _chordId
+         */
+        this._chordId = 0;
+
         /**
          * @member {string} title
          */
@@ -469,6 +477,7 @@ export default class Self {
         let ln0 = 0;
         let next = '';
         let types = LINE_TAGS.join('|');
+        let value = '';
         let rexp = new RegExp(`^(${types})(="([^"]*)")?$`);
         let line = [];
         let found = null;
@@ -488,6 +497,7 @@ export default class Self {
                     case CHORD_SHORTCUT:
                         next = splited[it0 + 1];
                         alone = false;
+                        value = found[3].replace(/\s/g, '');
 
                         // Sometimes chord isn't surrounded by text
                         // and needs to be rendered other way
@@ -495,14 +505,23 @@ export default class Self {
                             alone = true;
                         }
 
+                        // Additional parsing
+                        if (value[0] == '{') {
+                            this._chordId++;
+
+                            value = value.replace(/(\d)(:)/g, '"$1"$2');
+                            value = `{"title":"${this._chordId}","chord":${value}}`;
+                        } else {
+                            value = value.
+                                    replace(SHARP_REXP, `$1${SHARP_SYMBOL}`).
+                                    replace(FLAT_REXP, `$1${FLAT_SYMBOL}`);
+                        }
+
                         // Save chord object into line
                         line.push({
                             type: CHORD_ALIAS,
-                            value: (found[3] ? found[3] : '').
-                                   replace(/\s/g, '').
-                                   replace(SHARP_REXP, `$1${SHARP_SYMBOL}`).
-                                   replace(FLAT_REXP, `$1${FLAT_SYMBOL}`),
-                            alone
+                            alone,
+                            value
                         });
 
                         // Repeat section contain chords
@@ -518,7 +537,7 @@ export default class Self {
                             case VERSE_TYPE_CHORUS:
                             case VERSE_TYPE_DEFAULT:
                             case VERSE_TYPE_EPIGRAPH:
-                                this._parseChord(found[3]);
+                                this._parseChord(value);
                                 break;
 
                         }
