@@ -509,10 +509,25 @@ export default class Self {
 
                         // Additional parsing
                         if (value[0] == '{') {
-                            this._chordId++;
-
                             direct = true;
                             value = value.replace(/(\d)(:)/g, '"$1"$2');
+
+                            switch (type) {
+
+                                case VERSE_TYPE_CODA:
+                                case VERSE_TYPE_INTRO:
+                                case VERSE_TYPE_BRIDGE:
+                                    value = `{"title":"","chord":${value}}`;
+                                    break;
+
+                                default:
+                                    this._chordId++;
+
+                                    value = `{"title":"${this._chordId}","chord":${value}}`;
+                                    break;
+
+                            }
+
                             value = `{"title":"${this._chordId}","chord":${value}}`;
                         } else {
                             value = value.
