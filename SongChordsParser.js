@@ -510,7 +510,7 @@ export default class Self {
                         // Additional parsing
                         if (value[0] == '{') {
                             direct = true;
-                            value = value.replace(/(\d)(:)/g, '"$1"$2');
+                            value = value.replace(/(\d|barre)(:)/g, '"$1"$2');
 
                             switch (type) {
 
