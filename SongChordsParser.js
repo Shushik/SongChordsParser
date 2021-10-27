@@ -473,6 +473,7 @@ export default class Self {
      */
     _parseLine(raw, type, repeat) {
         let alone = false;
+        let direct = false;
         let it0 = 0;
         let ln0 = 0;
         let next = '';
@@ -510,6 +511,7 @@ export default class Self {
                         if (value[0] == '{') {
                             this._chordId++;
 
+                            direct = true;
                             value = value.replace(/(\d)(:)/g, '"$1"$2');
                             value = `{"title":"${this._chordId}","chord":${value}}`;
                         } else {
@@ -538,7 +540,7 @@ export default class Self {
                             case VERSE_TYPE_CHORUS:
                             case VERSE_TYPE_DEFAULT:
                             case VERSE_TYPE_EPIGRAPH:
-                                this._parseChord(value);
+                                this._parseChord(direct ? this._chordId : value);
                                 break;
 
                         }
