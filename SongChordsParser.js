@@ -467,11 +467,12 @@ export default class Self {
      * @private
      * @method _parseLine
      * @param {string} raw
+     * @param {number} pos
      * @param {string} type
      * @param {object} repeat
      * @returns {Array}
      */
-    _parseLine(raw, type, repeat) {
+    _parseLine(raw, pos, type, repeat) {
         let alone = false;
         let direct = false;
         let it0 = 0;
@@ -544,7 +545,7 @@ export default class Self {
                         });
 
                         // Repeat section contain chords
-                        if (repeat) {
+                        if (pos === 0 && repeat) {
                             repeat.chorded = true;
                         }
 
@@ -620,10 +621,10 @@ export default class Self {
 
                     if (found) {
                         line = line.replace(found[0], '');
-                        repeat.lines.push(this._parseLine(line, type, repeat));
+                        repeat.lines.push(this._parseLine(line, it0, type, repeat));
                         repeat = null;
                     } else {
-                        repeat.lines.push(this._parseLine(line, type, repeat));
+                        repeat.lines.push(this._parseLine(line, it0, type, repeat));
                     }
                 } else {
                     found = line.match(brexp);
@@ -645,7 +646,7 @@ export default class Self {
                             line = line.replace(found[0], '');
                         }
 
-                        repeat.lines.push(this._parseLine(line, type, repeat));
+                        repeat.lines.push(this._parseLine(line, it0, type, repeat));
 
                         lines.push(repeat);
 
@@ -653,7 +654,7 @@ export default class Self {
                             repeat = null;
                         }
                     } else {
-                        lines.push(this._parseLine(line, type, repeat));
+                        lines.push(this._parseLine(line, it0, type, repeat));
                     }
                 }
             }
