@@ -224,6 +224,48 @@ export const INLINES_LIST = [
 ];
 
 /**
+ * Order .chords array like this ['A', 'Am', 'B', 'Bm']
+ *
+ * @function orderChords
+ * @param {string} a
+ * @param {string} b
+ * @returns {number}
+ */
+export function orderChords(a, b) {
+    if (a > b) {
+        return 1;
+    } else if (a < b) {
+        return -1;
+    }
+
+    return 0;
+}
+
+/**
+ * Order authors by author type and name
+ *
+ * @function orderAuthors
+ * @param {object} a
+ * @param {object} b
+ * @returns {number}
+ */
+export function orderAuthors(a, b) {
+    if (AUTHOR_ORDER[a.type] > AUTHOR_ORDER[b.type]) {
+        return 1;
+    } else if (AUTHOR_ORDER[a.type] < AUTHOR_ORDER[b.type]) {
+        return -1;
+    } else {
+        if (a.name > b.name) {
+            return 1;
+        } else if (a.name < b.name) {
+            return -1;
+        }
+    }
+
+    return 0;
+}
+
+/**
  * @class SongChordsParser
  */
 export default class Self {
@@ -353,7 +395,7 @@ export default class Self {
         raw = this._parseCommons(raw);
         raw = this._parseVerses(raw);
 
-        this.chords.sort(this._orderChords);
+        this.chords.sort(orderChords);
 
         return this.parsed;
     }
@@ -408,25 +450,6 @@ export default class Self {
         }
 
         this.chords.push(raw);
-    }
-
-    /**
-     * Order .chords array like this ['A', 'Am', 'B', 'Bm']
-     *
-     * @private
-     * @method _orderChords
-     * @param {string} a
-     * @param {string} b
-     * @returns {number}
-     */
-    _orderChords(a, b) {
-        if (a > b) {
-            return 1;
-        } else if (a < b) {
-            return -1;
-        }
-
-        return 0;
     }
 
     /**
@@ -694,31 +717,6 @@ export default class Self {
     }
 
     /**
-     * Order authors by author type and name
-     *
-     * @private
-     * @method _orderAuthors
-     * @param {object} a
-     * @param {object} b
-     * @returns {number}
-     */
-    _orderAuthors(a, b) {
-        if (AUTHOR_ORDER[a.type] > AUTHOR_ORDER[b.type]) {
-            return 1;
-        } else if (AUTHOR_ORDER[a.type] < AUTHOR_ORDER[b.type]) {
-            return -1;
-        } else {
-            if (a.name > b.name) {
-                return 1;
-            } else if (a.name < b.name) {
-                return -1;
-            }
-        }
-
-        return 0;
-    }
-
-    /**
      * Parses all authors in text by [author], [written], [composed]
      * and [translated] blocks
      *
@@ -747,7 +745,7 @@ export default class Self {
             raw = this._parseAuthor(found[it0], types, raw);
         }
 
-        this.authors.sort(this._orderAuthors);
+        this.authors.sort(orderAuthors);
 
         return raw;
     }
