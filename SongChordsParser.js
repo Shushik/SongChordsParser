@@ -553,7 +553,7 @@ export default class Self {
                             case VERSE_TYPE_CHORUS:
                             case VERSE_TYPE_DEFAULT:
                             case VERSE_TYPE_EPIGRAPH:
-                                this._parseChord(direct ? this._chordId : value);
+                                this._parseChord(value);
                                 break;
 
                         }
