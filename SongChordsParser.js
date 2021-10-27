@@ -511,7 +511,7 @@ export default class Self {
                         if (value[0] == '{') {
                             direct = true;
                             value = value.replace(
-                                        /(\d|barre|active|inactive)(:)/g,
+                                        /(\d|barre|active|inactive|open|mute)(:)/g,
                                         '"$1"$2'
                                     );
 
