@@ -594,6 +594,7 @@ export default class Self {
     _parseLines(raw, type) {
         let it0 = 0;
         let ln0 = 0;
+        let it1 = 0;
         let brexp = /(\[repeat(="(\d+)")?\])\s*/;
         let erexp = /\s*(\[\/repeat\])/;
         let line = null;
@@ -621,10 +622,15 @@ export default class Self {
 
                     if (found) {
                         line = line.replace(found[0], '');
-                        repeat.lines.push(this._parseLine(line, it0, type, repeat));
+
+                        repeat.lines.push(this._parseLine(line, it1, type, repeat));
+
+                        it1 = 0;
                         repeat = null;
                     } else {
-                        repeat.lines.push(this._parseLine(line, it0, type, repeat));
+                        repeat.lines.push(this._parseLine(line, it1, type, repeat));
+
+                        it1++;
                     }
                 } else {
                     found = line.match(brexp);
@@ -646,7 +652,9 @@ export default class Self {
                             line = line.replace(found[0], '');
                         }
 
-                        repeat.lines.push(this._parseLine(line, it0, type, repeat));
+                        repeat.lines.push(this._parseLine(line, it1, type, repeat));
+
+                        it1++;
 
                         lines.push(repeat);
 
@@ -654,7 +662,7 @@ export default class Self {
                             repeat = null;
                         }
                     } else {
-                        lines.push(this._parseLine(line, it0, type, repeat));
+                        lines.push(this._parseLine(line, it1, type, repeat));
                     }
                 }
             }
