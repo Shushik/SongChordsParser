@@ -692,16 +692,6 @@ export default class Self {
         if (found) {
             type = found[1];
 
-/*
-            switch (type) {
-
-                case VERSE_TYPE_ASTERISM:
-                    content = ASTERISM_DEFAULT;
-                    break;
-
-            }
-*/
-
             raw = raw.replace(found[0], content);
             found = raw.match(erexp);
 
