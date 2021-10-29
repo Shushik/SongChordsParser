@@ -608,8 +608,8 @@ export default class Self {
         let lines = [];
         let repeat = null;
         let parsed = raw.
-                     replace(brexp, '$2').
-                     replace(erexp, '$2').
+                     replace(brexp, '$1').
+                     replace(erexp, '$1').
                      split(/\n/);
 
         // No need to go further
