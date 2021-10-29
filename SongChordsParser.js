@@ -601,8 +601,8 @@ export default class Self {
         let it0 = 0;
         let ln0 = 0;
         let it1 = 0;
-        let brexp = /(\[r(epeat)(="(\d+)")?\])\s*/;
-        let erexp = /\s*(\[\/r(epeat)\])/;
+        let brexp = /(\[r(epeat)?(="(\d+)")?\])\s*/;
+        let erexp = /\s*(\[\/r(epeat)?\])/;
         let line = null;
         let found = null;
         let lines = [];
