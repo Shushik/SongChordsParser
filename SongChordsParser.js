@@ -647,7 +647,7 @@ export default class Self {
 
                         repeat = {
                             type: REPEAT_ALIAS,
-                            times: (found[3] - 0) || REPEAT_TIMES,
+                            times: (found[4] - 0) || REPEAT_TIMES,
                             lines: []
                         };
 
