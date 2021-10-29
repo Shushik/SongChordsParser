@@ -158,6 +158,11 @@ const REPEAT_TIMES = 2;
 export const REPEAT_ALIAS = 'repeat';
 
 /**
+ * @const {string} REPEAT_SHORTCUT
+ */
+export const REPEAT_SHORTCUT = 'r';
+
+/**
  * @const {string} CHORD_ALIAS
  */
 export const CHORD_ALIAS = 'chord';
@@ -219,6 +224,7 @@ export const INLINES_LIST = [
     CHORD_ALIAS,
     CHORD_SHORTCUT,
     REPEAT_ALIAS,
+    REPEAT_SHORTCUT,
     SPACER_ALIAS,
     SPACER_SHORTCUT
 ];
