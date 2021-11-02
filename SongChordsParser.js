@@ -238,10 +238,22 @@ export const INLINES_LIST = [
  * @returns {number}
  */
 export function orderChords(a, b) {
-    if (a > b) {
+    let [a0, a1] = a.split('_');
+    let [b0, b1] = b.split('_');
+
+    a1 -= 0;
+    b1 -= 0;
+
+    if (a0 > b0) {
         return 1;
-    } else if (a < b) {
+    } else if (a0 < b0) {
         return -1;
+    } else {
+        if (a1 > b1) {
+            return 1;
+        } else if (a1 < b1) {
+            return -1;
+        }
     }
 
     return 0;
